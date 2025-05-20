@@ -19,11 +19,11 @@ class AppController:
 
         # HotkeyListener 생성
         self.hotkey_listener = HotkeyListener(
-            volume_up_callback=self.on_volume_up,
-            volume_down_callback=self.on_volume_down,
-            mute_toggle_callback=self.on_mute_toggle
+            self.on_volume_up,
+            self.on_volume_down,
+            self.on_mute_toggle
         )
-
+        
         self.poller = Poller(self.device, self.volume_state, poll_interval=0.1)
         self.theme_manager = None  # wx.App 생성 후 초기화 예정
 
