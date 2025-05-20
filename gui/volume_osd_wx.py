@@ -1,9 +1,8 @@
-# gui/volume_osd_wx.py
 import wx
 
 class VolumeOSD(wx.Frame):
     def __init__(self, *args, **kwargs):
-        style = wx.FRAME_SHAPED | wx.STAY_ON_TOP | wx.NO_TASKBAR | wx.FRAME_NO_TASKBAR | wx.FRAME_TOOL_WINDOW
+        style = wx.FRAME_SHAPED | wx.STAY_ON_TOP | wx.NO_TASKBAR | wx.FRAME_TOOL_WINDOW
         super().__init__(None, style=style, *args, **kwargs)
         self.SetSize((260, 80))
         self.SetTransparent(200)
@@ -11,6 +10,9 @@ class VolumeOSD(wx.Frame):
 
         self.Bind(wx.EVT_PAINT, self.on_paint)
         self.Hide()
+
+        self.timer = wx.Timer(self)
+        self.timer.Bind(wx.EVT_TIMER, self.on_timer)
 
     def popup(self, gain):
         if gain <= -126.9:
@@ -22,7 +24,7 @@ class VolumeOSD(wx.Frame):
         self.Show()
         self.Raise()
         self.Refresh()
-        # 타이머로 자동 숨김 처리 추가 가능
+        self.timer.Start(1000)  # 1초 후 자동 숨김
 
     def on_paint(self, event):
         dc = wx.PaintDC(self)
@@ -32,4 +34,8 @@ class VolumeOSD(wx.Frame):
         dc.SetTextForeground(wx.Colour(255,255,255))
         dc.SetFont(wx.Font(14, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_MEDIUM))
         w, h = dc.GetTextExtent(self.text)
-        dc.DrawText(self.text, (260-w)//2, (80-h)//2)
+        dc.DrawText(self.text, (260 - w) // 2, (80 - h) // 2)
+
+    def on_timer(self, event):
+        self.Hide()
+        self.timer.Stop()
