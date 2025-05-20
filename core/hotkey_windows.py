@@ -14,16 +14,25 @@ class HotkeyListenerWindows(HotkeyListenerBase):
         logger.info("HotkeyListenerWindows starting")
 
         def vol_up():
-            logger.info("Volume Up callback triggered")
-            self.volume_up_cb()
+            try:
+                logger.info("Volume Up callback triggered")
+                self.volume_up_cb()
+            except Exception:
+                logger.exception("Exception in Volume Up callback")
 
         def vol_down():
-            logger.info("Volume Down callback triggered")
-            self.volume_down_cb()
+            try:
+                logger.info("Volume Down callback triggered")
+                self.volume_down_cb()
+            except Exception:
+                logger.exception("Exception in Volume Down callback")
 
         def mute_toggle():
-            logger.info("Mute Toggle callback triggered")
-            self.mute_toggle_cb()
+            try:
+                logger.info("Mute Toggle callback triggered")
+                self.mute_toggle_cb()
+            except Exception:
+                logger.exception("Exception in Mute Toggle callback")
 
         self._handlers.append(
             keyboard.add_hotkey('ctrl+alt+up', vol_up, suppress=True)

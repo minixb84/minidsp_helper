@@ -32,7 +32,7 @@ class AppController:
             self.volume_state.handle_event(Event.KB_VOL, +0.5)
             gain = self.device.read_gain_raw()[0]
             logger.info(f"Gain after Volume Up: {gain}")
-            self.osd.popup(gain)
+            wx.CallAfter(self.osd.popup, gain)
         except Exception as e:
             logger.error(f"Exception in on_volume_up: {e}", exc_info=True)
 
@@ -42,7 +42,7 @@ class AppController:
             self.volume_state.handle_event(Event.KB_VOL, -0.5)
             gain = self.device.read_gain_raw()[0]
             logger.info(f"Gain after Volume Down: {gain}")
-            self.osd.popup(gain)
+            wx.CallAfter(self.osd.popup, gain)
         except Exception as e:
             logger.error(f"Exception in on_volume_down: {e}", exc_info=True)
 
@@ -52,7 +52,7 @@ class AppController:
             self.volume_state.handle_event(Event.KB_MUTE_TOGGLE)
             gain = self.device.read_gain_raw()[0]
             logger.info(f"Gain after Mute Toggle: {gain}")
-            self.osd.popup(gain)
+            wx.CallAfter(self.osd.popup, gain)
         except Exception as e:
             logger.error(f"Exception in on_mute_toggle: {e}", exc_info=True)
 
