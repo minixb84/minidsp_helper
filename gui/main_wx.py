@@ -1,4 +1,3 @@
-# gui/main_wx.py
 import wx
 import wx.adv
 import logging
@@ -11,7 +10,7 @@ class MainFrame(wx.Frame):
         super().__init__(*args, **kwargs)
         self.volume_osd = volume_osd
         self.hotkey_controller = hotkey_controller
-        self.controller = None  # AppController 객체 연결용
+        self.controller = None  # AppController 연결용
 
         self.SetTitle("miniDSP Gain Helper")
         self.SetSize((300, 400))
@@ -54,29 +53,31 @@ class MainFrame(wx.Frame):
         vbox.Add(self.cb_alt, 0, wx.ALL, 10)
         vbox.Add(self.cb_shift, 0, wx.ALL, 10)
 
-        # 디바이스 선택 콤보박스
+        # Device selection combobox
         self.device_combo = wx.ComboBox(panel, style=wx.CB_READONLY)
         devices = MiniDSPDevice.list_devices()
         for dev in devices:
-            name = dev.get('product_string') or dev.get('path')
-            self.device_combo.Append(name, dev.get('path'))
+            name = dev.get('product_string') or str(dev.get('path'))
+            path = dev.get('path')
+            self.device_combo.Append(name, path)
 
-        if self.device_combo.GetCount() == 1:
-            self.device_combo.Enable(False)
-        else:
+        if self.device_combo.GetCount() > 0:
+            self.device_combo.Enable(True)
             self.device_combo.SetSelection(0)
+        else:
+            self.device_combo.Enable(False)
 
         vbox.Add(wx.StaticText(panel, label="Select Device:"), 0, wx.LEFT | wx.TOP, 10)
         vbox.Add(self.device_combo, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
 
         panel.SetSizer(vbox)
 
-        # 체크박스 이벤트 바인딩
+        # Bind checkbox events
         self.cb_media.Bind(wx.EVT_CHECKBOX, self.on_media_toggle)
         self.cb_alt.Bind(wx.EVT_CHECKBOX, self.on_alt_toggle)
         self.cb_shift.Bind(wx.EVT_CHECKBOX, self.on_shift_toggle)
 
-        # 디바이스 변경 이벤트 바인딩
+        # Bind device selection event
         self.device_combo.Bind(wx.EVT_COMBOBOX, self.on_device_changed)
 
     def create_tray_icon(self):
@@ -122,7 +123,9 @@ class MainFrame(wx.Frame):
         self.hotkey_controller.enable_shift_keys(enabled)
 
     def on_device_changed(self, event):
-        path = self.device_combo.GetClientData(self.device_combo.GetSelection())
-        logger.info(f"Device changed to {path}")
+        sel = self.device_combo.GetSelection()
+        if sel == wx.NOT_FOUND:
+            return
+        path = self.device_combo.GetClientData(sel)
         if self.controller:
             self.controller.change_device(path)
