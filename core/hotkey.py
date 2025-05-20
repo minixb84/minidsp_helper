@@ -18,8 +18,8 @@ class HotkeyListener:
 
         self._alt_pressed = False
 
-def _on_key_press(self, key):
-    logger.debug(f"Key pressed: {key}")
+    def _on_key_press(self, key):
+        logger.debug(f"Key pressed: {key}")
 
     def _on_key_press(self, key):
         try:
@@ -45,8 +45,8 @@ def _on_key_press(self, key):
         except Exception:
             logger.exception("Exception in _on_key_press")
 
-def _on_key_press(self, key):
-    logger.debug(f"Key pressed: {key}")
+    def _on_key_press(self, key):
+        logger.debug(f"Key pressed: {key}")
 
     def _on_key_release(self, key):
         if key == keyboard.Key.alt_l or key == keyboard.Key.alt_r:

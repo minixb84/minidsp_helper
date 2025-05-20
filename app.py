@@ -60,12 +60,12 @@ class AppController:
     def start(self):
         # HotkeyListener에 start()가 없으니, 아래처럼 실행 메서드 확인 및 호출 필요
         # 예: 만약 listen()이 있다면 아래처럼 변경
-        if hasattr(self.hotkey_listener, "listen"):
+        '''if hasattr(self.hotkey_listener, "listen"):
             self.hotkey_listener.listen()
         elif hasattr(self.hotkey_listener, "run"):
             self.hotkey_listener.run()
         else:
-            logger.warning("HotkeyListener start method not found!")
+            logger.warning("HotkeyListener start method not found!")'''
 
         self.poller.start()
 
