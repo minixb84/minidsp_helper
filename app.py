@@ -29,9 +29,13 @@ class AppController:
 
     def on_volume_up(self):
         logger.info("Volume Up triggered")
-        self.volume_state.handle_event(Event.KB_VOL, +0.5)
-        gain = self.device.read_gain_raw()[0]
-        self.osd.popup(gain)
+        try:
+            self.volume_state.handle_event(Event.KB_VOL, +0.5)
+            gain = self.device.read_gain_raw()[0]
+            logger.info(f"Gain after Volume Up: {gain}")
+            self.osd.popup(gain)
+        except Exception as e:
+            logger.error(f"Exception in on_volume_up: {e}", exc_info=True)
 
     def on_volume_down(self):
         logger.info("Volume Down triggered")
