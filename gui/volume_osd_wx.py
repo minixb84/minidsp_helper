@@ -2,7 +2,7 @@ import wx
 
 class VolumeOSD(wx.Frame):
     def __init__(self, *args, **kwargs):
-        style = wx.FRAME_SHAPED | wx.STAY_ON_TOP | wx.NO_TASKBAR | wx.FRAME_TOOL_WINDOW
+        style = wx.FRAME_SHAPED | wx.STAY_ON_TOP | wx.FRAME_NO_TASKBAR | wx.FRAME_TOOL_WINDOW
         super().__init__(None, style=style, *args, **kwargs)
         self.SetSize((260, 80))
         self.SetTransparent(200)
