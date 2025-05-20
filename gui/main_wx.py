@@ -59,7 +59,7 @@ class MainFrame(wx.Frame):
         devices = MiniDSPDevice.list_devices()
         for dev in devices:
             name = dev.get('product_string') or dev.get('path')
-            index = self.device_combo.Append(name or dev.get('path'), dev.get('path'))
+            self.device_combo.Append(name, dev.get('path'))
 
         if self.device_combo.GetCount() == 1:
             self.device_combo.Enable(False)
