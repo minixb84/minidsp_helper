@@ -1,6 +1,7 @@
+# core/hotkey_windows.py
 import logging
 from core.hotkey_base import HotkeyListenerBase
-import keyboard  # 외부 라이브러리
+import keyboard  # keyboard 라이브러리 필요 (pip install keyboard)
 
 logger = logging.getLogger("minidsp.hotkey.windows")
 
@@ -24,9 +25,15 @@ class HotkeyListenerWindows(HotkeyListenerBase):
             logger.info("Mute Toggle callback triggered")
             self.mute_toggle_cb()
 
-        self._handlers.append(keyboard.add_hotkey('ctrl+alt+up', vol_up))
-        self._handlers.append(keyboard.add_hotkey('ctrl+alt+down', vol_down))
-        self._handlers.append(keyboard.add_hotkey('ctrl+alt+m', mute_toggle))
+        self._handlers.append(
+            keyboard.add_hotkey('ctrl+alt+up', vol_up, suppress=True)
+        )
+        self._handlers.append(
+            keyboard.add_hotkey('ctrl+alt+down', vol_down, suppress=True)
+        )
+        self._handlers.append(
+            keyboard.add_hotkey('ctrl+alt+m', mute_toggle, suppress=True)
+        )
 
         logger.info("HotkeyListenerWindows started")
 
