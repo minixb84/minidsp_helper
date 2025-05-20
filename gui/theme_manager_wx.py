@@ -13,17 +13,18 @@ class ThemeManager:
             self._apply_light()
 
     def _apply_dark(self):
-        dark_bg = wx.Colour(45, 45, 45)
-        dark_fg = wx.Colour(220, 220, 220)
-        palette = wx.Palette()
-        palette.SetColour(wx.SYS_COLOUR_WINDOW, dark_bg)
-        palette.SetColour(wx.SYS_COLOUR_WINDOWTEXT, dark_fg)
-        self.app.SetPalette(palette)
+        # 다크 모드 배경/글자색을 앱 프레임에 설정 (참고용)
+        bg = wx.Colour(45, 45, 45)
+        fg = wx.Colour(220, 220, 220)
+        for w in wx.GetTopLevelWindows():
+            w.SetBackgroundColour(bg)
+            w.SetForegroundColour(fg)
+            w.Refresh()
 
     def _apply_light(self):
-        light_bg = wx.Colour(250, 250, 250)
-        light_fg = wx.Colour(30, 30, 30)
-        palette = wx.Palette()
-        palette.SetColour(wx.SYS_COLOUR_WINDOW, light_bg)
-        palette.SetColour(wx.SYS_COLOUR_WINDOWTEXT, light_fg)
-        self.app.SetPalette(palette)
+        bg = wx.Colour(250, 250, 250)
+        fg = wx.Colour(30, 30, 30)
+        for w in wx.GetTopLevelWindows():
+            w.SetBackgroundColour(bg)
+            w.SetForegroundColour(fg)
+            w.Refresh()
